@@ -1,0 +1,19 @@
+name: a
+
+on:
+  schedule:
+    - cron: "0 12 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          date > .last-updated
+          git config user.name "bot"
+          git config user.email "bot@ascenly.org"
+          git add -A && git commit -m "update" && git push
